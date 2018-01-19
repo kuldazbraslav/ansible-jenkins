@@ -50,15 +50,6 @@ jenkins_admin: "admin@example.com" # The admininstrator email address for the Je
 # If you need to override any java options then do that here.
 jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
 
-# Install Jenkins by means of a Docker container
-jenkins_install_via: "docker"
-
-# Install Jenkins directly on Ubuntu/Debian Linux systems
-jenkins_install_via: "apt"
-
-# Install Jenkins directly on RedHat/CentOS Linux systems
-jenkins_install_via: "yum"
-
 # Configuration files owner and group
 jenkins_config_owner: "ubuntu"
 jenkins_config_group: "ubuntu"

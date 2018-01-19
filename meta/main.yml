@@ -1,10 +1,11 @@
 ---
 galaxy_info:
-  author: Emmet O'Grady
+  author: kuldazbraslav
+  #author: Emmet O'Grady
   description: Installs and completely configures Jenkins using Ansible
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
-  issue_tracker_url: https://github.com/emmetog/ansible-jenkins/issues
+  issue_tracker_url: https://github.com/kuldazbraslav/ansible-jenkins/issues
 
   # Some suggested licenses:
   # - BSD (default)
@@ -108,9 +109,9 @@ galaxy_info:
   #  - 9.1
   #  - 9.2
   #  - 9.3
-  - name: Ubuntu
-    versions:
-    - all
+  #- name: Ubuntu
+  #  versions:
+  #  - all
   #  - lucid
   #  - maverick
   #  - natty
@@ -124,9 +125,9 @@ galaxy_info:
   #  - vivid
   #  - wily
   #  - xenial
-  - name: Debian
-    versions:
-    - all
+  #- name: Debian
+  #  versions:
+  #  - all
   #  - etch
   #  - jessie
   #  - lenny

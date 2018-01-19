@@ -16,7 +16,9 @@
       Jenkins-Crumb: "{{ jenkins_token.content.split(':')[1] | default('noCrumb') }}"
     body: "<jenkins><install plugin=\"{{ item }}@latest\" /></jenkins>"
     status_code: 200,302
-  with_items: "{{ jenkins_plugins }}"
+  with_items: 
+    - "{{ jenkins_plugins_default }}"
+    - "{{ jenkins_plugins }}"
   when: jenkins_token.status == 200
 
 - name: Install plugins if crumb is disabled
@@ -27,7 +29,9 @@
       Content-Type: "text/xml"
     body: "<jenkins><install plugin=\"{{ item }}@latest\" /></jenkins>"
     status_code: 200,302
-  with_items: "{{ jenkins_plugins }}"
+  with_items: 
+    - "{{ jenkins_plugins_default }}"
+    - "{{ jenkins_plugins }}"
   when: jenkins_token.status == 404
 
 
@@ -43,4 +47,6 @@
 
 - wait_for:
     path: "{{ jenkins_home }}/plugins/{{ item }}.jpi"
-  with_items: "{{ jenkins_plugins }}"
+  with_items: 
+    - "{{ jenkins_plugins_default }}"
+    - "{{ jenkins_plugins }}"

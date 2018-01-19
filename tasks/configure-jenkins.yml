@@ -1,5 +1,11 @@
 ---
 
+- name: Check if config file exists (config.xml)
+  local_action:
+    module: stat
+    path: "{{ jenkins_source_config_xml }}"
+  register: jenkins_source_config_xml_stat
+
 - name: Configuration file is up to date (config.xml)
   template:
     src: "{{ jenkins_source_config_xml }}"
@@ -7,6 +13,7 @@
     mode: 0644
     owner: "{{ jenkins_config_owner }}"
     group: "{{ jenkins_config_group }}"
+  when: jenkins_source_config_xml_stat.stat.exists
 
 - name: Configure Jenkins location
   template:
@@ -18,7 +25,7 @@
 
 - name: Create intermediate dirs for custom files
   file:
-    path: "{{ jenkins_home }}/{{ item.dest | dirname }}"
+    path: "{{ jenkins_home }}/{{ item | dirname }}"
     owner: "{{ jenkins_config_owner }}"
     group: "{{ jenkins_config_group }}"
     mode: 0755
@@ -28,8 +35,8 @@
 
 - name: Configure custom files
   template:
-    src: "{{ jenkins_source_dir_configs }}/{{ item.src }}"
-    dest: "{{ jenkins_home }}/{{ item.dest }}"
+    src: "{{ jenkins_source_dir_configs }}/{{ item }}"
+    dest: "{{ jenkins_home }}/{{ item }}"
     mode: 0644
     owner: "{{ jenkins_config_owner }}"
     group: "{{ jenkins_config_group }}"
