@@ -1,0 +1,23 @@
+---
+
+- name: Create config dirs for nodes
+  file:
+    path: "{{ jenkins_home }}/nodes/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+  with_items: "{{ groups[outer_item.group] }}"
+
+- debug:
+    var: item
+  with_items: "{{ groups[outer_item.group] | map('extract', hostvars) | list }}"
+
+- name: Configure nodes
+  template:
+    src: "{{ jenkins_source_dir_nodes }}/{{ outer_item.template }}"
+    dest: "{{ jenkins_home }}/nodes/{{ item.inventory_hostname }}/config.xml"
+    mode: 0644
+    owner: "{{ jenkins_config_owner }}"
+    group: "{{ jenkins_config_group }}"
+  with_items: "{{ groups[outer_item.group] | map('extract', hostvars) | list }}"

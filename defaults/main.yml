@@ -17,6 +17,7 @@ jenkins_config_group: "jenkins"
 # The locations of the configuration files for jenkins
 jenkins_source_dir_configs: "{{ playbook_dir }}/jenkins-configs"
 jenkins_source_dir_jobs: "{{ jenkins_source_dir_configs }}/jobs"
+jenkins_source_dir_nodes: "{{ jenkins_source_dir_configs }}/nodes"
 
 # config.xml template source
 jenkins_source_config_xml: "{{ jenkins_source_dir_configs }}/config.xml"
@@ -31,6 +32,10 @@ jenkins_source_secrets: "{{ jenkins_source_dir_configs }}/secrets/"
 
 # The names of the jobs (config.xml must exist under jenkins_source_dir_jobs/job_name/)
 jenkins_jobs: []
+
+# Credentials required for plugin installation
+jenkins_username: ""
+jenkins_password: ""
 
 # These plugins will be installed in the jenkins instance
 jenkins_plugins_default:

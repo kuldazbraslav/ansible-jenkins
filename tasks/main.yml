@@ -6,6 +6,11 @@
 # data, otherwise some files might be overwritten when it restarts
 - include: "yum/stop.yml"
 - include: "configure-jenkins.yml"
+- include_tasks: "configure-nodes.yml"
+  with_items:
+    - "{{ jenkins_nodes }}"
+  loop_control:
+    loop_var: outer_item
 
 - include: "yum/restart.yml"
 - include: "wait-for-start.yml"

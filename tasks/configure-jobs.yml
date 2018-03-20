@@ -17,6 +17,9 @@
 - name: get token for jenkins api
   uri:
     url: '{{ jenkins_url }}:{{ jenkins_port }}/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+    force_basic_auth: "{% if jenkins_username and jenkins_password %}yes{% else %}no{%endif%}"
+    user: "{{ jenkins_username }}"
+    password: "{{ jenkins_password }}"
     return_content: yes
     status_code: 200,404
   register: jenkins_token
@@ -27,7 +30,10 @@
     method: POST
     status_code: 200,302
     headers:
-      Jenkins-Crumb: "{{ jenkins_token.content.split(':')[1] }}"
+      Jenkins-Crumb: "{{ jenkins_token.content.split(':')[1] | default('noCrumb') }}"
+    force_basic_auth: "{% if jenkins_username and jenkins_password %}yes{% else %}no{%endif%}"
+    user: "{{ jenkins_username }}"
+    password: "{{ jenkins_password }}"
   ignore_errors: yes
   when: jenkins_token.status == 200
 
@@ -35,6 +41,9 @@
   uri:
     url: "{{ jenkins_url }}:{{ jenkins_port }}/reload"
     method: POST
+    force_basic_auth: "{% if jenkins_username and jenkins_password %}yes{% else %}no{%endif%}"
+    user: "{{ jenkins_username }}"
+    password: "{{ jenkins_password }}"
     status_code: 200,302
   ignore_errors: yes
   when: jenkins_token.status == 404
