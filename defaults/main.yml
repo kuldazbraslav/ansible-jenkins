@@ -1,6 +1,6 @@
 ---
 
-jenkins_version: "2.73.2" # The exact version of jenkins to deploy
+jenkins_version: "2.89.4" # The exact version of jenkins to deploy
 
 jenkins_url: "http://127.0.0.1" # The url that Jenkins will be accessible on
 jenkins_port: "8080" # The port that Jenkins will listen on
@@ -53,6 +53,7 @@ jenkins_plugins_default:
   - gradle
   - jenkins-multijob-plugin
   - job-dsl
+  - jobConfigHistory
   - ldap
   - mailer
   - matrix-auth
